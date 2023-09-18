@@ -1,25 +1,20 @@
-﻿using FullStackAuth_WebAPI.Configuration;
-using FullStackAuth_WebAPI.Models;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using FullStackAuth_WebAPI.Models;
+using Google.Protobuf.WellKnownTypes;
 using Microsoft.EntityFrameworkCore;
 
 namespace FullStackAuth_WebAPI.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<User>
+    public class ApplicationDbContext : DbContext
     {
-        public DbSet<Car> Cars { get; set; }
+        public DbSet<Review> Reviews { get; set; }
 
-        public ApplicationDbContext(DbContextOptions options)
-    : base(options)
+        public DbSet<Favorite> Favorites { get; set; }
+        public ApplicationDbContext(DbContextOptions options) : base(options)
         {
 
         }
+            
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-
-            modelBuilder.ApplyConfiguration(new RolesConfiguration());
-        }
     }
+    
 }
