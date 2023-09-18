@@ -1,18 +1,18 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using FullStackAuth_WebAPI.Models;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
-namespace FullStackAuth_WebAPI.Models
+namespace FullStackAuth_WebAPI.DataTransferObjects
 {
-    public class Review
+    public class ReviewWithUserDto
     {
-        [Key]
+        
         public int Id { get; set; }
         public string BookId { get; set; }
         public string Text { get; set; }
         public double Rating { get; set; }
-        [ForeignKey("User")]
         public string UserId { get; set; }
-        public User User { get; set; }
+        public UserForDisplayDto User { get; set; }
+
     }
 }
