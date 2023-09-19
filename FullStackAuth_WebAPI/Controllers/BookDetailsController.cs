@@ -30,27 +30,31 @@ namespace FullStackAuth_WebAPI.Controllers
         {
             try
             {
-                string bookId = id;
-                //var bookDetails=
-                var reviews = _context.Reviews.Where(r=>r.BookId == bookId).Select(r => new ReviewWithUserDto { 
-                    Id=r.Id,
-                    BookId=r.BookId,
-                    Text=r.Text,
-                    Rating=r.Rating,
-                    UserId=r.UserId,
-                    User = new UserForDisplayDto
-                    {
-                        Id = r.User.Id,
-                        FirstName = r.User.FirstName,
-                        LastName = r.User.LastName,
-                        UserName = r.User.UserName,
 
-                    }
-                    
+                var bookDetails = new BookDetailsDTO {
+                    BookId = id,
+                    Reviews = _context.Reviews.Where(r => r.BookId == id).Select(r => new ReviewWithUserDto {
+                        Id = r.Id,
+                        BookId = r.BookId,
+                        Text = r.Text,
+                        Rating = r.Rating,
+                        UserId = r.UserId,
+                        User = new UserForDisplayDto
+                        {
+                            Id = r.User.Id,
+                            FirstName = r.User.FirstName,
+                            LastName = r.User.LastName,
+                            UserName = r.User.UserName,
 
-                }).ToList();
-              
-                return StatusCode(200,bookId);
+                        }
+
+
+                    }).ToList(),
+                    AverageRating=1
+                    IsFavorite=false
+
+                };
+                return StatusCode(200,);
             }
             catch(Exception ex)
             {
