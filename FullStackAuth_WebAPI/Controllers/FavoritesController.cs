@@ -29,26 +29,26 @@ namespace FullStackAuth_WebAPI.Controllers
 
 
         //// GET api/<FavoritesController>/5
-        //[HttpGet("myfavorites"), Authorize]
-        //public string Get(int id)
-        //{
-        //    try
-        //    {
-        //        // Retrieve the authenticated user's ID from the JWT token
-        //        string userId = User.FindFirstValue("id");
+        [HttpGet("myfavorites"), Authorize]
+        public IActionResult Get(int id)
+        {
+            try
+            {
+                // Retrieve the authenticated user's ID from the JWT token
+                string userId = User.FindFirstValue("id");
 
-        //        // Retrieve all cars that belong to the authenticated user, including the owner object
-        //        var favorites = _context.Favorites.Where(c => c.UserId.Equals(userId));
+                // Retrieve all cars that belong to the authenticated user, including the owner object
+                var favorites = _context.Favorites.Where(c => c.UserId.Equals(userId));
 
-        //        // Return the list of cars as a 200 OK response
-        //        return StatusCode(200, favorites);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        // If an error occurs, return a 500 internal server error with the error message
-        //        return StatusCode(500, ex.Message);
-        //    }
-        //}
+                // Return the list of cars as a 200 OK response
+                return StatusCode(200, favorites);
+            }
+            catch (Exception ex)
+            {
+                // If an error occurs, return a 500 internal server error with the error message
+                return StatusCode(500, ex.Message);
+            }
+        }
 
         // POST api/<FavoritesController>
         [HttpPost]
