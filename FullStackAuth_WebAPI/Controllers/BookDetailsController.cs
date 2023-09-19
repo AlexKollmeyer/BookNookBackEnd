@@ -2,6 +2,7 @@
 using FullStackAuth_WebAPI.DataTransferObjects;
 using FullStackAuth_WebAPI.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualBasic;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -50,11 +51,13 @@ namespace FullStackAuth_WebAPI.Controllers
 
 
                     }).ToList(),
-                    AverageRating=1
-                    IsFavorite=false
+                    AverageRating = Convert.ToDouble(_context.Reviews.Where(r => r.BookId == id).Average(r => r.Rating))
+                    IsFavorite =false
+                 
+                    
 
                 };
-                return StatusCode(200,);
+                return StatusCode(200,bookDetails);
             }
             catch(Exception ex)
             {
