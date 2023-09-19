@@ -29,7 +29,7 @@ namespace FullStackAuth_WebAPI.Controllers
 
         // GET api/<FavoritesController>/5
         [HttpGet("myfavorites"), Authorize]
-        public string Get(int id)
+        public IActionResult Get(int id)
         {
             try
             {
