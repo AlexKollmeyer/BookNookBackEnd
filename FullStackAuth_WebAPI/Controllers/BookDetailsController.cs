@@ -31,18 +31,20 @@ namespace FullStackAuth_WebAPI.Controllers
             try
             {
                 string bookId = id;
-                var reviews = _context.Reviews.Where(r=>r.BookId == bookId).Select(r => new ReviewWithUserDto { }));
+                //var bookDetails=
+                var reviews = _context.Reviews.Where(r=>r.BookId == bookId).Select(r => new ReviewWithUserDto { 
+                    Id=r.Id,
+                    BookId=r.BookId,
+
+                    
+                });
                 
                 
                 
-                var bookDetails = new BookDetailsDTO
-                {
-                    BookId=bookId,
-                    IsFavorite=false,
+
+                    
                     
 
-
-                };
                
                 
                 return StatusCode(200,);
