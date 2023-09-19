@@ -27,6 +27,7 @@ namespace FullStackAuth_WebAPI.Controllers
             return new string[] { "value1", "value2" };
         }
 
+<<<<<<< HEAD
         //// GET api/<FavoritesController>/5
         //[HttpGet("myfavorites"), Authorize]
         //public string Get(int id)
@@ -48,6 +49,29 @@ namespace FullStackAuth_WebAPI.Controllers
         //        return StatusCode(500, ex.Message);
         //    }
         //}
+=======
+        // GET api/<FavoritesController>/5
+        [HttpGet("myfavorites"), Authorize]
+        public string Get(int id)
+        {
+            try
+            {
+                
+                string userId = User.FindFirstValue("id");
+
+                
+                var Favorites = _context.Favorites.Where(c => c.UserId.Equals(userId));
+
+                
+                return StatusCode(200, Favorites);
+            }
+            catch (Exception ex)
+            {
+                
+                return StatusCode(500, ex.Message);
+            }
+        }
+>>>>>>> b13a612a2a814294714eae2de274ad6ecacb39d6
 
         // POST api/<FavoritesController>
         [HttpPost]
