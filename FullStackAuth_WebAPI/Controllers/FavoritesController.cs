@@ -33,18 +33,18 @@ namespace FullStackAuth_WebAPI.Controllers
         {
             try
             {
-                // Retrieve the authenticated user's ID from the JWT token
+                
                 string userId = User.FindFirstValue("id");
 
-                // Retrieve all cars that belong to the authenticated user, including the owner object
-                var favorites = _context.Favorites.Where(c => c.UserId.Equals(userId));
+                
+                var Favorites = _context.Favorites.Where(c => c.UserId.Equals(userId));
 
-                // Return the list of cars as a 200 OK response
-                return StatusCode(200, favorites);
+                
+                return StatusCode(200, Favorites);
             }
             catch (Exception ex)
             {
-                // If an error occurs, return a 500 internal server error with the error message
+                
                 return StatusCode(500, ex.Message);
             }
         }
