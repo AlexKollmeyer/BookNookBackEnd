@@ -65,11 +65,6 @@ namespace FullStackAuth_WebAPI.Controllers
                     IsFavorite = IsFavorite,
 
 
-
-
-
-
-
                 };
                 return StatusCode(200,bookDetails);
             }
