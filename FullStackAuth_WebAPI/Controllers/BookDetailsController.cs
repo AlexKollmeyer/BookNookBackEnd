@@ -1,8 +1,10 @@
 ﻿using FullStackAuth_WebAPI.Data;
 using FullStackAuth_WebAPI.DataTransferObjects;
 using FullStackAuth_WebAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualBasic;
+using System.Security.Claims;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -26,11 +28,18 @@ namespace FullStackAuth_WebAPI.Controllers
         }
 
         // GET api/<ValuesController>/5
-        [HttpGet("{id}")]
+        [HttpGet("{id}") , Authorize]
         public IActionResult Get(string id)
         {
             try
             {
+                string userId = User.FindFirstValue("id");
+                var favorite = _context.Favorites.Where(f => f.BookId == id && f.UserId == userId);
+                bool IsFavorite = false;
+                if (favorite != null)
+                {
+                    IsFavorite = true;
+                }
 
                 var bookDetails = new BookDetailsDTO {
                     BookId = id,
@@ -51,10 +60,15 @@ namespace FullStackAuth_WebAPI.Controllers
 
 
                     }).ToList(),
-                    AverageRating = Convert.ToDouble(_context.Reviews.Where(r => r.BookId == id).Average(r => r.Rating))
-                    IsFavorite =false
-                 
-                    
+                    AverageRating = Convert.ToDouble(_context.Reviews.Where(r => r.BookId == id).Average(r => r.Rating)),
+
+                    IsFavorite = IsFavorite,
+
+
+
+
+
+
 
                 };
                 return StatusCode(200,bookDetails);
