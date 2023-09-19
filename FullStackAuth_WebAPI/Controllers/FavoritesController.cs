@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FullStackAuth_WebAPI.Data;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,6 +12,13 @@ namespace FullStackAuth_WebAPI.Controllers
     [ApiController]
     public class FavoritesController : ControllerBase
     {
+        private readonly ApplicationDbContext _context;
+        public FavoritesController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
+
         // GET: api/<FavoritesController>
         [HttpGet]
         public IEnumerable<string> Get()
@@ -16,10 +27,25 @@ namespace FullStackAuth_WebAPI.Controllers
         }
 
         // GET api/<FavoritesController>/5
-        [HttpGet("{id}")]
+        [HttpGet("myfavorites"), Authorize]
         public string Get(int id)
         {
-            return "value";
+            try
+            {
+                // Retrieve the authenticated user's ID from the JWT token
+                string userId = User.FindFirstValue("id");
+
+                // Retrieve all cars that belong to the authenticated user, including the owner object
+                var favorites = _context.Favorites.Where(c => c.UserId.Equals(userId));
+
+                // Return the list of cars as a 200 OK response
+                return StatusCode(200, favorites);
+            }
+            catch (Exception ex)
+            {
+                // If an error occurs, return a 500 internal server error with the error message
+                return StatusCode(500, ex.Message);
+            }
         }
 
         // POST api/<FavoritesController>

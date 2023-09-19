@@ -47,8 +47,8 @@ namespace FullStackAuth_WebAPI.Controllers
                     return Unauthorized();
                 }
 
-                // Set the car's owner ID  the authenticated user's ID we found earlier
-                data.BookId = userId;
+                
+                data.UserId = userId;
 
                 
                 _context.Reviews.Add(data);
