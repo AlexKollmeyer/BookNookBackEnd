@@ -146,9 +146,6 @@ namespace FullStackAuth_WebAPI.Migrations
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("longtext");
-
                     b.Property<string>("UserName")
                         .HasColumnType("longtext");
 
