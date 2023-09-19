@@ -35,19 +35,22 @@ namespace FullStackAuth_WebAPI.Controllers
                 var reviews = _context.Reviews.Where(r=>r.BookId == bookId).Select(r => new ReviewWithUserDto { 
                     Id=r.Id,
                     BookId=r.BookId,
+                    Text=r.Text,
+                    Rating=r.Rating,
+                    UserId=r.UserId,
+                    User = new UserForDisplayDto
+                    {
+                        Id = r.User.Id,
+                        FirstName = r.User.FirstName,
+                        LastName = r.User.LastName,
+                        UserName = r.User.UserName,
 
-                    
-                });
-                
-                
-                
-
-                    
+                    }
                     
 
-               
-                
-                return StatusCode(200,);
+                }).ToList();
+              
+                return StatusCode(200,bookId);
             }
             catch(Exception ex)
             {
