@@ -28,13 +28,13 @@ namespace FullStackAuth_WebAPI.Controllers
         }
 
         // GET api/<ValuesController>/5
-        [HttpGet("{id}") , Authorize]
-        public IActionResult Get(string id)
+        [HttpGet("{bookId}") , Authorize]
+        public IActionResult Get(string bookId)
         {
             try
             {
                 string userId = User.FindFirstValue("id");
-                var favorite = _context.Favorites.Where(f => f.BookId == id && f.UserId == userId).ToList();
+                var favorite = _context.Favorites.Where(f => f.BookId == bookId && f.UserId == userId).ToList();
                 bool IsFavorite = false;
                 if (favorite.Count != 0)
                 {
@@ -42,8 +42,8 @@ namespace FullStackAuth_WebAPI.Controllers
                 }
 
                 var bookDetails = new BookDetailsDTO {
-                    BookId = id,
-                    Reviews = _context.Reviews.Where(r => r.BookId == id).Select(r => new ReviewWithUserDto {
+                    BookId = bookId,
+                    Reviews = _context.Reviews.Where(r => r.BookId == bookId).Select(r => new ReviewWithUserDto {
                         Id = r.Id,
                         BookId = r.BookId,
                         Text = r.Text,
@@ -60,7 +60,7 @@ namespace FullStackAuth_WebAPI.Controllers
 
 
                     }).ToList(),
-                    AverageRating = Convert.ToDouble(_context.Reviews.Where(r => r.BookId == id).Average(r => r.Rating)),
+                    AverageRating = Convert.ToDouble(_context.Reviews.Where(r => r.BookId == bookId).Average(r => r.Rating)),
 
                     IsFavorite = IsFavorite,
 
